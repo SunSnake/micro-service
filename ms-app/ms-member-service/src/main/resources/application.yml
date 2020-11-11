@@ -1,0 +1,14 @@
+#spring基本配置
+spring:
+  application:
+    name: ms-member-service
+  profiles:
+    active: @env@
+#项目的信息，主要是在注册中心点击地址的时候不报错，还有利于心跳检测，好吧，其实这块就是可有可无的，但是还是写上吧
+#因为后续做一些项目的检测的时候，还是可以利用得到的
+info:
+  app:
+    name: "@project.name@"
+    description: "@project.description@"
+    version: "@project.version@"
+    spring-boot-version: "@project.parent.version@"

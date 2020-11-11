@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <!--导入属性配置-->
+    <!--    <properties resource="db.properties"></properties>-->
+
+    <!--指定特定数据库的jdbc驱动jar包的位置-->
+    <!--    <classPathEntry location="${db.driverLocation}"/>-->
+
+    <context id="default" targetRuntime="MyBatis3" defaultModelType="flat">
+        <!-- 自动识别数据库关键字，默认false，如果设置为true，根据SqlReservedWords中定义的关键字列表；
+        一般保留默认值，遇到数据库关键字（Java关键字），使用columnOverride覆盖 -->
+        <property name="autoDelimitKeywords" value="true"/>
+        <!-- 生成的Java文件的编码 -->
+        <property name="javaFileEncoding" value="utf-8"/>
+        <!-- beginningDelimiter和endingDelimiter：指明数据库的用于标记数据库对象名的符号，比如ORACLE就是双引号，MYSQL默认是`反引号； -->
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
+
+        <!--        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"></plugin>-->
+        <!-- optional，旨在创建class时，对注释进行控制 -->
+        <commentGenerator>
+            <property name="suppressDate" value="true"/>
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+
+        <!--jdbc的数据库连接-->
+        <jdbcConnection
+                driverClass="com.mysql.jdbc.Driver"
+                connectionURL="jdbc:mysql://127.0.0.1:3306/djsp"
+                userId="root"
+                password="admin">
+        </jdbcConnection>
+
+
+        <!-- 非必需，类型处理器，在数据库类型和java类型之间的转换控制-->
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+
+        <!-- Model模型生成器,用来生成含有主键key的类，记录类 以及查询Example类
+            targetPackage     指定生成的model生成所在的包名
+            targetProject     指定在该项目下所在的路径
+        -->
+        <!--<javaModelGenerator targetPackage="com.mmall.pojo" targetProject=".\src\main\java">-->
+        <javaModelGenerator targetPackage="com.microservice.member.pojo.ExceptionLog"
+                            targetProject="./src/main/java">
+            <!-- 是否允许子包，即targetPackage.schemaName.tableName -->
+            <property name="enableSubPackages" value="false"/>
+            <!-- 是否对model添加 构造函数 -->
+            <property name="constructorBased" value="true"/>
+            <!-- 是否对类CHAR类型的列的数据进行trim操作 -->
+            <property name="trimStrings" value="true"/>
+            <!-- 建立的Model对象是否 不可改变  即生成的Model对象不会有 setter方法，只有构造方法 -->
+            <property name="immutable" value="false"/>
+        </javaModelGenerator>
+
+        <!--mapper映射文件生成所在的目录 为每一个数据库的表生成对应的SqlMap文件 -->
+        <!--<sqlMapGenerator targetPackage="mappers" targetProject=".\src\main\resources">-->
+        <sqlMapGenerator targetPackage="mapper.ExceptionLog" targetProject="./src/main/resources">
+            <property name="enableSubPackages" value="false"/>
+        </sqlMapGenerator>
+
+        <!-- 客户端代码，生成易于使用的针对Model对象和XML配置文件 的代码
+                type="ANNOTATEDMAPPER",生成Java Model 和基于注解的Mapper对象
+                type="MIXEDMAPPER",生成基于注解的Java Model 和相应的Mapper对象
+                type="XMLMAPPER",生成SQLMap XML文件和独立的Mapper接口
+        -->
+
+        <!-- targetPackage：mapper接口dao生成的位置 -->
+        <!--<javaClientGenerator type="XMLMAPPER" targetPackage="com.mmall.dao" targetProject=".\src\main\java">-->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.microservice.member.mapper.ExceptionLog"
+                             targetProject="./src/main/java">
+            <!-- enableSubPackages:是否让schema作为包的后缀 -->
+            <property name="enableSubPackages" value="false"/>
+        </javaClientGenerator>
+
+        <!-- 配置哪张表放开哪条配置，不能够全部放开，否则xml文件会追加 -->
+        <table tableName="dj_log_exception" domainObjectName="ExceptionLogPo" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>
+        <!--        <table tableName="t_touch_redpackage_content" domainObjectName="RedPackageContentPo" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>-->
+        <!--        <table tableName="t_touch_redpackage_condition" domainObjectName="RedPackageConditionPo" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>-->
+        <!--        <table tableName="t_touch_redpackage_record" domainObjectName="RedPackageRecordPo" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>-->
+        <!--        <table tableName="t_touch_address" domainObjectName="AddressPo" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>-->
+        <!--        <table tableName="tab_app_info" domainObjectName="AppInfoPo" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>-->
+        <!--        <table tableName="t_touch_booking_eparchy_product" domainObjectName="BookEparchyProduct" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>-->
+        <!--        <table tableName="t_touch_book_unite_depart_product" domainObjectName="BookUniteDepartProduct" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>-->
+        <!--        <table tableName="tab_category" domainObjectName="CategoryPo" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>-->
+        <!--        <table tableName="t_touch_ctrl" domainObjectName="ControlPo" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>-->
+        <!--        <table tableName="t_touch_error" domainObjectName="ErrorPo" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>-->
+        <!--        <table tableName="t_touch_esim_terminal" domainObjectName="EsimTerminalPo" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>-->
+        <!--        <table tableName="t_touch_help_document" domainObjectName="HelpDocumentPo" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>-->
+        <!--        <table tableName="t_touch_home_banner" domainObjectName="HomeBannerPo" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>-->
+        <!--        <table tableName="t_touch_notice" domainObjectName="NoticePo" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>-->
+        <!--        <table tableName="TD_S_OPERA_AREA" domainObjectName="OperaAreaPo" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>-->
+        <!--        <table tableName="t_touch_orderstate" domainObjectName="OrderStatePo" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>-->
+        <!--        <table tableName="t_touch_paperless_job" domainObjectName="PaperLessInfoPo" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>-->
+        <!--        <table tableName="t_touch_hot_pic_config" domainObjectName="PicConfigPo" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>-->
+        <!--        <table tableName="t_touch_promotion_msg" domainObjectName="PromotionMsgPo" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>-->
+        <!--        <table tableName="t_touch_message" domainObjectName="ReaderIDParamPo" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>-->
+        <!--        <table tableName="t_touch_redpackage_activity" domainObjectName="RedPackageActivityPo" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>-->
+        <!--        <table tableName="t_touch_redpackage_probability" domainObjectName="RedPackageProbabilityPo" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>-->
+        <!--        <table tableName="t_touch_redpackage_target" domainObjectName="RedPackageTargetPo" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>-->
+        <!--        <table tableName="t_s_sequence" domainObjectName="SequencePo" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>-->
+        <!--        <table tableName="tab_menu" domainObjectName="TabMenuPo" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>-->
+        <!--        <table tableName="t_touch_tkCardproduct" domainObjectName="TkCardproductPo" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>-->
+        <!--        <table tableName="tl_touch_log" domainObjectName="TouchLogPo" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>-->
+        <!--        <table tableName="t_touch_version_notice" domainObjectName="VersionNoticePo" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>-->
+        <!--        <table tableName="t_touch_zone_config" domainObjectName="ZoneConfig" enableCountByExample="true"-->
+        <!--               enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true"-->
+        <!--               selectByExampleQueryId="true"></table>-->
+        <!--        <table tableName="t_touch_trace_config" domainObjectName="TraceConfigPo" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>-->
+        <!--                <table tableName="t_touch_trace_log" domainObjectName="TraceLogPo" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>-->
+        <!--        <table tableName="t_touch_mock_result" domainObjectName="MockResultPo" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>-->
+        <!--                <table tableName="t_touch_order_attr" domainObjectName="OrderAttrPo" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>-->
+        <!--        <table tableName="t_touch_interface_config" domainObjectName="InterfaceConfigPo" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>-->
+        <!--        <table tableName="t_touch_token" domainObjectName="TouchTokenPo" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>-->
+        <!--                <table tableName="t_touch_traffic_limit" domainObjectName="TrafficLimitPo" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>-->
+        <!--            <table tableName="t_touch_cross_domain_operator" domainObjectName="CrossDomainOperatorPo" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>-->
+        <!--        <table tableName="t_touch_fee_item_rule" domainObjectName="FeeItemRulePo" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>-->
+        <!--        <table tableName="t_touch_rate_limit" domainObjectName="RateLimitPo" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>-->
+        <!--                <table tableName="t_touch_upgrade_package" domainObjectName="UpgradePackagePo" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true"></table>-->
+
+
+    </context>
+</generatorConfiguration>

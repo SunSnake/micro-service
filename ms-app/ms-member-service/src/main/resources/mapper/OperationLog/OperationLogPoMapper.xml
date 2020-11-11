@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.microservice.member.mapper.OperationLog.OperationLogPoMapper" >
+  <resultMap id="BaseResultMap" type="com.microservice.member.pojo.OperationLog.OperationLogPo" >
+    <constructor >
+      <idArg column="oper_id" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="oper_modul" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="oper_type" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="oper_desc" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="oper_method" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="oper_req" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="oper_resp" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="oper_ip" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="request_uri" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    </constructor>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    oper_id, oper_modul, oper_type, oper_desc, oper_method, oper_req, oper_resp, oper_ip,
+    request_uri, create_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.microservice.member.pojo.OperationLog.OperationLogPoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from dj_log_operation
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from dj_log_operation
+    where oper_id = #{operId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from dj_log_operation
+    where oper_id = #{operId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.microservice.member.pojo.OperationLog.OperationLogPoExample" >
+    delete from dj_log_operation
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.microservice.member.pojo.OperationLog.OperationLogPo" >
+    insert into dj_log_operation (oper_id, oper_modul, oper_type,
+      oper_desc, oper_method, oper_req,
+      oper_resp, oper_ip, request_uri,
+      create_time)
+    values (#{operId,jdbcType=VARCHAR}, #{operModul,jdbcType=VARCHAR}, #{operType,jdbcType=VARCHAR},
+      #{operDesc,jdbcType=VARCHAR}, #{operMethod,jdbcType=VARCHAR}, #{operReq,jdbcType=VARCHAR},
+      #{operResp,jdbcType=VARCHAR}, #{operIp,jdbcType=VARCHAR}, #{requestUri,jdbcType=VARCHAR},
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.microservice.member.pojo.OperationLog.OperationLogPo" >
+    insert into dj_log_operation
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="operId != null" >
+        oper_id,
+      </if>
+      <if test="operModul != null" >
+        oper_modul,
+      </if>
+      <if test="operType != null" >
+        oper_type,
+      </if>
+      <if test="operDesc != null" >
+        oper_desc,
+      </if>
+      <if test="operMethod != null" >
+        oper_method,
+      </if>
+      <if test="operReq != null" >
+        oper_req,
+      </if>
+      <if test="operResp != null" >
+        oper_resp,
+      </if>
+      <if test="operIp != null" >
+        oper_ip,
+      </if>
+      <if test="requestUri != null" >
+        request_uri,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="operId != null" >
+        #{operId,jdbcType=VARCHAR},
+      </if>
+      <if test="operModul != null" >
+        #{operModul,jdbcType=VARCHAR},
+      </if>
+      <if test="operType != null" >
+        #{operType,jdbcType=VARCHAR},
+      </if>
+      <if test="operDesc != null" >
+        #{operDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="operMethod != null" >
+        #{operMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="operReq != null" >
+        #{operReq,jdbcType=VARCHAR},
+      </if>
+      <if test="operResp != null" >
+        #{operResp,jdbcType=VARCHAR},
+      </if>
+      <if test="operIp != null" >
+        #{operIp,jdbcType=VARCHAR},
+      </if>
+      <if test="requestUri != null" >
+        #{requestUri,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.microservice.member.pojo.OperationLog.OperationLogPoExample" resultType="java.lang.Integer" >
+    select count(*) from dj_log_operation
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update dj_log_operation
+    <set >
+      <if test="record.operId != null" >
+        oper_id = #{record.operId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operModul != null" >
+        oper_modul = #{record.operModul,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operType != null" >
+        oper_type = #{record.operType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operDesc != null" >
+        oper_desc = #{record.operDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operMethod != null" >
+        oper_method = #{record.operMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operReq != null" >
+        oper_req = #{record.operReq,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operResp != null" >
+        oper_resp = #{record.operResp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operIp != null" >
+        oper_ip = #{record.operIp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.requestUri != null" >
+        request_uri = #{record.requestUri,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update dj_log_operation
+    set oper_id = #{record.operId,jdbcType=VARCHAR},
+      oper_modul = #{record.operModul,jdbcType=VARCHAR},
+      oper_type = #{record.operType,jdbcType=VARCHAR},
+      oper_desc = #{record.operDesc,jdbcType=VARCHAR},
+      oper_method = #{record.operMethod,jdbcType=VARCHAR},
+      oper_req = #{record.operReq,jdbcType=VARCHAR},
+      oper_resp = #{record.operResp,jdbcType=VARCHAR},
+      oper_ip = #{record.operIp,jdbcType=VARCHAR},
+      request_uri = #{record.requestUri,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.microservice.member.pojo.OperationLog.OperationLogPo" >
+    update dj_log_operation
+    <set >
+      <if test="operModul != null" >
+        oper_modul = #{operModul,jdbcType=VARCHAR},
+      </if>
+      <if test="operType != null" >
+        oper_type = #{operType,jdbcType=VARCHAR},
+      </if>
+      <if test="operDesc != null" >
+        oper_desc = #{operDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="operMethod != null" >
+        oper_method = #{operMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="operReq != null" >
+        oper_req = #{operReq,jdbcType=VARCHAR},
+      </if>
+      <if test="operResp != null" >
+        oper_resp = #{operResp,jdbcType=VARCHAR},
+      </if>
+      <if test="operIp != null" >
+        oper_ip = #{operIp,jdbcType=VARCHAR},
+      </if>
+      <if test="requestUri != null" >
+        request_uri = #{requestUri,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where oper_id = #{operId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.microservice.member.pojo.OperationLog.OperationLogPo" >
+    update dj_log_operation
+    set oper_modul = #{operModul,jdbcType=VARCHAR},
+      oper_type = #{operType,jdbcType=VARCHAR},
+      oper_desc = #{operDesc,jdbcType=VARCHAR},
+      oper_method = #{operMethod,jdbcType=VARCHAR},
+      oper_req = #{operReq,jdbcType=VARCHAR},
+      oper_resp = #{operResp,jdbcType=VARCHAR},
+      oper_ip = #{operIp,jdbcType=VARCHAR},
+      request_uri = #{requestUri,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where oper_id = #{operId,jdbcType=VARCHAR}
+  </update>
+</mapper>

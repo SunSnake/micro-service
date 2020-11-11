@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.microservice.member.mapper.ExceptionLog.ExceptionLogPoMapper" >
+  <resultMap id="BaseResultMap" type="com.microservice.member.pojo.ExceptionLog.ExceptionLogPo" >
+    <constructor >
+      <idArg column="excep_id" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="req_param" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="req_method" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="excep_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="oper_uri" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="oper_ip" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    </constructor>
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.microservice.member.pojo.ExceptionLog.ExceptionLogPo" >
+    <constructor >
+      <idArg column="excep_id" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="req_param" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="req_method" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="excep_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="oper_uri" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="oper_ip" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="excep_message" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    excep_id, req_param, req_method, excep_name, oper_uri, oper_ip, create_time
+  </sql>
+  <sql id="Blob_Column_List" >
+    excep_message
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.microservice.member.pojo.ExceptionLog.ExceptionLogPoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from dj_log_exception
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.microservice.member.pojo.ExceptionLog.ExceptionLogPoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from dj_log_exception
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from dj_log_exception
+    where excep_id = #{excepId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from dj_log_exception
+    where excep_id = #{excepId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.microservice.member.pojo.ExceptionLog.ExceptionLogPoExample" >
+    delete from dj_log_exception
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.microservice.member.pojo.ExceptionLog.ExceptionLogPo" >
+    insert into dj_log_exception (excep_id, req_param, req_method,
+      excep_name, oper_uri, oper_ip,
+      create_time, excep_message)
+    values (#{excepId,jdbcType=VARCHAR}, #{reqParam,jdbcType=VARCHAR}, #{reqMethod,jdbcType=VARCHAR},
+      #{excepName,jdbcType=VARCHAR}, #{operUri,jdbcType=VARCHAR}, #{operIp,jdbcType=VARCHAR},
+      #{createTime,jdbcType=TIMESTAMP}, #{excepMessage,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.microservice.member.pojo.ExceptionLog.ExceptionLogPo" >
+    insert into dj_log_exception
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="excepId != null" >
+        excep_id,
+      </if>
+      <if test="reqParam != null" >
+        req_param,
+      </if>
+      <if test="reqMethod != null" >
+        req_method,
+      </if>
+      <if test="excepName != null" >
+        excep_name,
+      </if>
+      <if test="operUri != null" >
+        oper_uri,
+      </if>
+      <if test="operIp != null" >
+        oper_ip,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="excepMessage != null" >
+        excep_message,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="excepId != null" >
+        #{excepId,jdbcType=VARCHAR},
+      </if>
+      <if test="reqParam != null" >
+        #{reqParam,jdbcType=VARCHAR},
+      </if>
+      <if test="reqMethod != null" >
+        #{reqMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="excepName != null" >
+        #{excepName,jdbcType=VARCHAR},
+      </if>
+      <if test="operUri != null" >
+        #{operUri,jdbcType=VARCHAR},
+      </if>
+      <if test="operIp != null" >
+        #{operIp,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="excepMessage != null" >
+        #{excepMessage,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.microservice.member.pojo.ExceptionLog.ExceptionLogPoExample" resultType="java.lang.Integer" >
+    select count(*) from dj_log_exception
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update dj_log_exception
+    <set >
+      <if test="record.excepId != null" >
+        excep_id = #{record.excepId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reqParam != null" >
+        req_param = #{record.reqParam,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reqMethod != null" >
+        req_method = #{record.reqMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="record.excepName != null" >
+        excep_name = #{record.excepName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operUri != null" >
+        oper_uri = #{record.operUri,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operIp != null" >
+        oper_ip = #{record.operIp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.excepMessage != null" >
+        excep_message = #{record.excepMessage,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update dj_log_exception
+    set excep_id = #{record.excepId,jdbcType=VARCHAR},
+      req_param = #{record.reqParam,jdbcType=VARCHAR},
+      req_method = #{record.reqMethod,jdbcType=VARCHAR},
+      excep_name = #{record.excepName,jdbcType=VARCHAR},
+      oper_uri = #{record.operUri,jdbcType=VARCHAR},
+      oper_ip = #{record.operIp,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      excep_message = #{record.excepMessage,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update dj_log_exception
+    set excep_id = #{record.excepId,jdbcType=VARCHAR},
+      req_param = #{record.reqParam,jdbcType=VARCHAR},
+      req_method = #{record.reqMethod,jdbcType=VARCHAR},
+      excep_name = #{record.excepName,jdbcType=VARCHAR},
+      oper_uri = #{record.operUri,jdbcType=VARCHAR},
+      oper_ip = #{record.operIp,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.microservice.member.pojo.ExceptionLog.ExceptionLogPo" >
+    update dj_log_exception
+    <set >
+      <if test="reqParam != null" >
+        req_param = #{reqParam,jdbcType=VARCHAR},
+      </if>
+      <if test="reqMethod != null" >
+        req_method = #{reqMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="excepName != null" >
+        excep_name = #{excepName,jdbcType=VARCHAR},
+      </if>
+      <if test="operUri != null" >
+        oper_uri = #{operUri,jdbcType=VARCHAR},
+      </if>
+      <if test="operIp != null" >
+        oper_ip = #{operIp,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="excepMessage != null" >
+        excep_message = #{excepMessage,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where excep_id = #{excepId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.microservice.member.pojo.ExceptionLog.ExceptionLogPo" >
+    update dj_log_exception
+    set req_param = #{reqParam,jdbcType=VARCHAR},
+      req_method = #{reqMethod,jdbcType=VARCHAR},
+      excep_name = #{excepName,jdbcType=VARCHAR},
+      oper_uri = #{operUri,jdbcType=VARCHAR},
+      oper_ip = #{operIp,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      excep_message = #{excepMessage,jdbcType=LONGVARCHAR}
+    where excep_id = #{excepId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.microservice.member.pojo.ExceptionLog.ExceptionLogPo" >
+    update dj_log_exception
+    set req_param = #{reqParam,jdbcType=VARCHAR},
+      req_method = #{reqMethod,jdbcType=VARCHAR},
+      excep_name = #{excepName,jdbcType=VARCHAR},
+      oper_uri = #{operUri,jdbcType=VARCHAR},
+      oper_ip = #{operIp,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where excep_id = #{excepId,jdbcType=VARCHAR}
+  </update>
+</mapper>

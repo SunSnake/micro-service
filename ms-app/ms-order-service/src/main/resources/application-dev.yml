@@ -1,0 +1,21 @@
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:8000/ms-eureka/eureka
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ip-address}:9002
+
+spring:
+  redis:
+    masterName: redis_master
+    sentinelCluster: 192.168.223.133:27379, 192.168.223.131:27379, 192.168.223.132:27379
+    password: admin
+    timeout: 1000
+    max-active: 32
+    max-wait: 300
+    max-idle: 16
+    min-idle: 8
+    database: 0

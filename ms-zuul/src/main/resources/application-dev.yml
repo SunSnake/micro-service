@@ -1,0 +1,20 @@
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8000/ms-eureka/eureka
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    preferIpAddress: true
+    instance-id: ${spring.cloud.client.ip-address}:7001
+zuul:
+  routes:
+    api-member:
+      path: /member/**
+      serviceId: ms-member-service
+    api-order:
+      path: /order/**
+      serviceId: ms-order-service
+ribbon:
+  eureka:
+    enabled: true
