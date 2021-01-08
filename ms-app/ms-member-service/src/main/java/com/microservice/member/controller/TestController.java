@@ -23,8 +23,8 @@ public class TestController {
     @Autowired
     TestService testService;
 
-    @Autowired
-    RedisUtil redisUtil;
+    /*@Autowired
+    RedisUtil redisUtil;*/
 
     @ApiOperation("get请求")
     @RequestMapping(value = "/testGet", method = RequestMethod.GET)
@@ -33,11 +33,11 @@ public class TestController {
         return testService.testGet();
     }
 
-    @ApiOperation("redis")
+    /*@ApiOperation("redis")
     @RequestMapping(value = "/redis", method = RequestMethod.GET)
     @TraceLog(operModul = "redis", operType = "新增测试", operDesc = "测试redis")
     public Object redis(){
         return redisUtil.get("hh");
-    }
+    }*/
 
 }

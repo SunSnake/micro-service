@@ -1,6 +1,7 @@
 package com.microservice.exec.handler;
 
 import com.microservice.exec.constant.WebSocketConstant;
+import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.group.ChannelGroup;
@@ -8,8 +9,15 @@ import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.HttpHeaderNames;
 import io.netty.handler.codec.http.HttpHeaders;
 import io.netty.handler.codec.http.HttpMethod;
+import io.netty.handler.codec.http.multipart.DefaultHttpDataFactory;
+import io.netty.handler.codec.http.multipart.HttpPostRequestDecoder;
+import io.netty.handler.codec.http.multipart.InterfaceHttpData;
 import io.netty.handler.codec.http.websocketx.*;
 import io.netty.util.AttributeKey;
+
+import javax.servlet.http.HttpServletRequest;
+import java.io.InputStream;
+import java.util.List;
 
 /**
  * author  zhaoqi
@@ -29,23 +37,30 @@ public class WebSocketHandler extends SimpleChannelInboundHandler<Object> {
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, Object msg) throws Exception {
-        System.out.println(msg);
         if (msg instanceof FullHttpRequest) {
             FullHttpRequest request = (FullHttpRequest) msg;
-            if(isWebSocketUpgrade(request)){
-                String subProtocols = request.headers().get(HttpHeaderNames.SEC_WEBSOCKET_PROTOCOL);
-                WebSocketServerHandshakerFactory factory = new WebSocketServerHandshakerFactory(WEBSOCKET_URI_ROOT, subProtocols, false);
-                WebSocketServerHandshaker handshaker = factory.newHandshaker(request);
+            System.out.println(request);
 
-                if(handshaker == null){
-                    WebSocketServerHandshakerFactory.sendUnsupportedVersionResponse(ctx.channel());
-                }else{
-                    //响应请求
-                    handshaker.handshake(ctx.channel(), request);
-                    //将handshaker绑定给channel
-                    ctx.channel().attr(ATTR_HANDSHAKER).set(handshaker);
-                }
-            }
+            ByteBuf buf = request.content();
+            HttpPostRequestDecoder decoder = new HttpPostRequestDecoder(new DefaultHttpDataFactory(false), request);
+            List<InterfaceHttpData> httpPostData = decoder.getBodyHttpDatas();
+            System.out.println(httpPostData);
+
+            //InputStream in = buf.getBytes();
+
+
+            /*String subProtocols = request.headers().get(HttpHeaderNames.SEC_WEBSOCKET_PROTOCOL);
+            WebSocketServerHandshakerFactory factory = new WebSocketServerHandshakerFactory(WEBSOCKET_URI_ROOT, subProtocols, false);
+            WebSocketServerHandshaker handshaker = factory.newHandshaker(request);
+
+            if (handshaker == null) {
+                WebSocketServerHandshakerFactory.sendUnsupportedVersionResponse(ctx.channel());
+            } else {
+                //响应请求
+                handshaker.handshake(ctx.channel(), request);
+                //将handshaker绑定给channel
+                ctx.channel().attr(ATTR_HANDSHAKER).set(handshaker);
+            }*/
         }
         if (msg instanceof WebSocketFrame) {
             WebSocketFrame frame = (WebSocketFrame) msg;

@@ -3,7 +3,7 @@
 <mapper namespace="com.microservice.member.mapper.test.TestMapper">
 
     <select id="testGet" parameterType="String" resultType="Object">
-        SELECT * FROM authority;
+        SELECT chnl_id FROM `inhall_user_info` GROUP BY chnl_id;
     </select>
 
 </mapper>

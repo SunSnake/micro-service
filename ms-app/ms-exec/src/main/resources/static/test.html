@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1,
+user-scalable=no">
+    <title>Tiled map service</title>
+    <link rel="stylesheet"
+          href="https://js.arcgis.com/3.28/esri/css/esri.css">
+    <style>
+        html, body, #map {
+            height: 100%; width: 100%; margin: 0; padding: 0;
+        }
+    </style>
+    <script src="https://js.arcgis.com/3.28/"></script>
+    <script>
+        var map;
+        require(["esri/map",
+                "esri/layers/ArcGISTiledMapServiceLayer",
+                "esri/layers/ArcGISDynamicMapServiceLayer",
+                "esri/geometry/Point",
+                "esri/SpatialReference",
+                "esri/tasks/query",
+                "esri/tasks/QueryTask",
+                "dojo/domReady!"],
+            function(Map, ArcGISTiledMapServiceLayer,
+                     ArcGISDynamicMapServiceLayer,Point, SpatialReference,Query, QueryTask) {
+                map = new Map("map");
+                //电子公共服务
+                var tiled = new
+                ArcGISTiledMapServiceLayer("http://10.244.6.82:9058/3G/arcgis/rest/services/FISHNET/STATION_3G/MapServer?Authorization=Basic NzVmZDAwNjMtNjcxNy00MjBmLTkwMmQtNzU0MWZjM2RkYzZkOjA4ZjYyNWRmZjNmZmI5MDQxNjFhNWE1ZjcwMDU0Njc2");
+                map.addLayer(tiled);
+            }
+        );
+    </script>
+</head>
+<body>
+<div id="map"></div>
+</body>
+</html>

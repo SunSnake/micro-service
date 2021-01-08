@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+		<title>Tiled map service</title>
+
+		<script src="https://js.arcgis.com/3.28/"></script>
+		<link rel="stylesheet" href="https://js.arcgis.com/3.28/esri/css/esri.css">
+		<!--<script src="https://js.arcgis.com/4.17/"></script>
+		<link rel="stylesheet" href="https://js.arcgis.com/4.17/esri/themes/dark/main.css">-->
+
+		<style>
+			html,
+			body,
+			#map {
+				height: 100%;
+				width: 100%;
+				margin: 0;
+				padding: 0;
+			}
+		</style>
+
+		<script>
+			var map;
+			require(["esri/map",
+					"esri/layers/ArcGISTiledMapServiceLayer",
+					"esri/layers/ArcGISDynamicMapServiceLayer",
+					"esri/geometry/Point",
+					"esri/SpatialReference",
+					"esri/tasks/query",
+					"esri/tasks/QueryTask",
+					"dojo/domReady!"
+				],
+				function (Map, ArcGISTiledMapServiceLayer,
+					ArcGISDynamicMapServiceLayer, Point, SpatialReference, Query, QueryTask) {
+					map = new Map("map");
+					var qg ="https://10.162.241.78:6444/arcgis/rest/services/GUANGDONG/GUANGDONG/MapServer";
+					var tiled = new  ArcGISTiledMapServiceLayer(qg);
+					map.addLayer(tiled);
+				}
+			);
+		</script>
+	</head>
+	<body>
+		<div id="map"></div>
+	</body>
+</html>
